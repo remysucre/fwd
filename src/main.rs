@@ -3,29 +3,30 @@ use egg::*;
 define_language! {
     enum Lang {
         Symbol(Symbol),
-        Other(Symbol, Vec<Id>),
+        "f" = F(Id),
     }
 }
 
 fn main() {
-    let w = 1000;
-    let d = 10000;
+    let w = 10;
+    let d = 10;
     let mut egraph: EGraph<Lang, ()> = EGraph::new(());
     for i in 1..w {
         let x = format!("x_{}", i);
         let mut id = egraph.add_expr(&x.parse().unwrap());
-        for j in 1..d {
-           let f = format!("f_{}", j);
-            id = egraph.add(Language::from_op_str(&f, vec![id]).unwrap());
+        for _j in 1..d {
+            // let f = format!("f_{}", j);
+            // id = egraph.add(Language::from_op_str(&f, vec![id]).unwrap());
+            id = egraph.add(Language::from_op_str("f", vec![id]).unwrap());
         }
     }
-    // egraph.dot().to_png("input.png").unwrap();
+    egraph.dot().to_png("input.png").unwrap();
     let runner = Runner::default()
         .with_node_limit(1000_000_000)
         .with_time_limit(std::time::Duration::from_secs(60))
         .with_egraph(egraph)
         .run(&rules(w));
-    // runner.egraph.dot().to_png("output.png").unwrap();
+    runner.egraph.dot().to_png("output.png").unwrap();
     runner.print_report();
 }
 
