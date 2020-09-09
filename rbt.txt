@@ -1,0 +1,5 @@
+  Total time: 0.285636141
+  Total time: 0.952975545
+  Total time: 2.462398961
+  Total time: 4.095405047
+  Total time: 5.955123578
