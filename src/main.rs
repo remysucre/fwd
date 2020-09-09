@@ -8,13 +8,13 @@ define_language! {
 }
 
 fn main() {
-    let n = 1000;
-    let m = 10000;
+    let w = 1000;
+    let d = 10000;
     let mut egraph: EGraph<Lang, ()> = EGraph::new(());
-    for i in 1..n {
+    for i in 1..w {
         let x = format!("x_{}", i);
         let mut id = egraph.add_expr(&x.parse().unwrap());
-        for j in 1..m {
+        for j in 1..d {
            let f = format!("f_{}", j);
             id = egraph.add(Language::from_op_str(&f, vec![id]).unwrap());
         }
@@ -24,7 +24,7 @@ fn main() {
         .with_node_limit(1000_000_000)
         .with_time_limit(std::time::Duration::from_secs(60))
         .with_egraph(egraph)
-        .run(&rules(n));
+        .run(&rules(w));
     // runner.egraph.dot().to_png("output.png").unwrap();
     runner.print_report();
 }
