@@ -1,4 +1,5 @@
 use egg::*;
+use std::time::Instant;
 
 define_language! {
     enum Lang {
@@ -8,37 +9,37 @@ define_language! {
 }
 
 fn main() {
-    // let w = 10000;
-    for &w in &[20000, 40000, 60000, 80000, 100000] {
-       // let d = 10000;
-       let mut egraph: EGraph<Lang, ()> = EGraph::new(());
-       for i in 1..w {
-           let x = format!("x_{}", i);
-           let id = egraph.add_expr(&x.parse().unwrap());
-           let f = format!("f_{}", i);
-           egraph.add(Language::from_op_str(&f, vec![id]).unwrap());
-       }
-       // egraph.dot().to_png("input.png").unwrap();
-       let runner = Runner::default()
-           .with_node_limit(1000_000_000)
-           .with_time_limit(std::time::Duration::from_secs(1000))
-           .with_egraph(egraph)
-           .run(&rules(w));
-       // runner.egraph.dot().to_png("output.png").unwrap();
-       runner.print_report();
+    let mut xs = vec![];
+    for &w in &[2000, 4000, 6000, 8000, 10000] {
+        let mut egraph: EGraph<Lang, ()> = EGraph::new(());
+        for i in 1..w {
+            let x = format!("x_{}", i);
+            let id = egraph.add_expr(&x.parse().unwrap());
+            xs.push(id);
+            let f = format!("f_{}", i);
+            egraph.add(Language::from_op_str(&f, vec![id]).unwrap());
+        }
+
+        let start = Instant::now();
+        for i in 1..w - 1 {
+            egraph.union(xs[0], xs[i]);
+            // egraph.rebuild();
+        }
+        egraph.rebuild();
+        println!("{}", start.elapsed().as_millis());
     }
 }
 
 fn rules(n: usize) -> Vec<Rewrite<Lang, ()>> {
     let mut rules = vec![];
-    for i in 1..n {
+    for i in 1..n - 1 {
         let r = Rewrite::new(
             format!("id_{}", i),
             format!("id_{}", i),
-            // format!("x_{}", i).parse::<Pattern<Lang>>().unwrap(),
             "x_1".parse::<Pattern<Lang>>().unwrap(),
-            format!("x_{}", i+1).parse::<Pattern<Lang>>().unwrap(),
-        ).unwrap();
+            format!("x_{}", i + 1).parse::<Pattern<Lang>>().unwrap(),
+        )
+        .unwrap();
         rules.push(r);
     }
     rules
