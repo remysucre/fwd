@@ -1,30 +1,9 @@
-Runner report
-=============
-  Stop reason: Saturated
-  Iterations: 3
-  Egraph size: 39999 nodes, 20000 classes, 39999 memo
-  Rebuilds: 19999, 6666.33 per iter
-  Total time: 63.923352978
-    Search:  (0.33) 21.106735325
-    Apply:   (0.67) 42.809097705
-    Rebuild: (0.00) 0.007443234
-Runner report
-=============
-  Stop reason: Saturated
-  Iterations: 3
-  Egraph size: 79999 nodes, 40000 classes, 79999 memo
-  Rebuilds: 39999, 13333.00 per iter
-  Total time: 280.613950475
-    Search:  (0.30) 85.065081403
-    Apply:   (0.70) 195.529784154
-    Rebuild: (0.00) 0.018821687
-Runner report
-=============
-  Stop reason: Saturated
-  Iterations: 3
-  Egraph size: 119999 nodes, 60000 classes, 119999 memo
-  Rebuilds: 59999, 19999.67 per iter
-  Total time: 663.0228377450001
-    Search:  (0.30) 198.567768913
-    Apply:   (0.70) 464.421581297
-    Rebuild: (0.00) 0.033074327
+690
+2055
+5306
+8730
+14065
+25113
+38552
+56955
+80039

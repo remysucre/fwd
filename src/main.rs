@@ -10,7 +10,7 @@ define_language! {
 
 fn main() {
     let mut xs = vec![];
-    for &w in &[2000, 4000, 6000, 8000, 10000] {
+    for &w in &[2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000] {
         let mut egraph: EGraph<Lang, ()> = EGraph::new(());
         for i in 1..w {
             let x = format!("x_{}", i);
