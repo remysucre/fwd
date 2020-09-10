@@ -9,7 +9,7 @@ define_language! {
 }
 
 fn go(upward: bool) {
-    let mut w = 100;
+    let mut w = 3000;
     loop {
         let d = 100;
         let mut egraph: EGraph<Lang, ()> = EGraph::new(());
@@ -26,22 +26,31 @@ fn go(upward: bool) {
         }
 
         let start = Instant::now();
+        let mut rbt = 0;
         for i in 1..w - 1 {
-            egraph.union(xs[0], xs[i]);
+            egraph.union(xs[i-1], xs[i]);
             if upward {
+                let rs = Instant::now();
                 egraph.rebuild();
+                // println!("{}", rs.elapsed().as_nanos());
+                rbt += rs.elapsed().as_nanos();
             }
         }
+        // println!("{}", rbt / (w-2) as u128 );
         if !upward {
             egraph.rebuild();
         }
 
         let time = start.elapsed();
         println!("{}, {}", w, time.as_millis());
-        w += 100;
-        if time > Duration::from_secs(2) || w >= 10000{
+        w += 1000;
+        if time > Duration::from_secs(1) || w >= 200000 {
             break
         }
+        // println!("hashcons: {}", egraph.total_size());
+        // println!("nodes: {}", egraph.total_number_of_nodes());
+        // println!("classes: {}", egraph.number_of_classes());
+        // break
     }
 }
 
